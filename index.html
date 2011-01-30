@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="jquery.js" type="application/javascript"></script>
+		<script src="socket.io.js" type="application/javascript"></script>
+		<script>
+			socket = new io.Socket('localhost');
+			socket.connect();
+			socket.on('message', function(payload){
+				$('#message').text(payload.message)
+			});
+			
+			$(function(){
+				
+				$('form').submit(function(){
+					socket.send($('#message_input').val())
+					return false
+				})
+				
+			})
+		</script>
+	</head>
+	<body>
+		<form>
+			<h1 id="message"></h1>
+			<input id="message_input" type="text" />
+			<input type="submit" value="Submit" />
+		</form>
+	</body>
+</html>
